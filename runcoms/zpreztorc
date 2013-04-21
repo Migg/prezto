@@ -37,7 +37,8 @@ zstyle ':prezto:load' pmodule \
   'dpkg' \
   'archive' \
   'fasd' \
-  'utility'
+  'utility' \
+  'git'
 
 #
 # Editor
