@@ -57,6 +57,9 @@ setopt BEEP
 # Variables
 #
 
+# Treat these characters as part of a word.
+WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
 # Use human-friendly identifiers.
 zmodload zsh/terminfo
 typeset -gA key_info
@@ -90,12 +93,11 @@ key_info=(
   'BackTab'   "$terminfo[kcbt]"
 )
 
-# Do not bind any keys if there are empty values in $key_info.
+# Set empty $key_info values to an invalid UTF-8 sequence to induce silent
+# bindkey failure.
 for key in "${(k)key_info[@]}"; do
   if [[ -z "$key_info[$key]" ]]; then
-    print "prezto: one or more keys are non-bindable" >&2
-    unset key{,_info}
-    return 1
+    key_info["$key"]='�'
   fi
 done
 
@@ -269,10 +271,6 @@ bindkey -M vicmd "v" edit-command-line
 # Undo/Redo
 bindkey -M vicmd "u" undo
 bindkey -M vicmd "$key_info[Control]R" redo
-
-# Switch to command mode.
-bindkey -M viins "jk" vi-cmd-mode
-bindkey -M viins "kj" vi-cmd-mode
 
 if (( $+widgets[history-incremental-pattern-search-backward] )); then
   bindkey -M vicmd "?" history-incremental-pattern-search-backward

@@ -1,7 +1,8 @@
 Git
 ===
 
-Enhances the [Git][1] distributed version control system by providing aliases, functions and by exposing repository status information to prompts.
+Enhances the [Git][1] distributed version control system by providing aliases,
+functions and by exposing repository status information to prompts.
 
 Git **1.7.2** is the [minimum required version][7].
 
@@ -12,7 +13,7 @@ Settings
 
 The format of the [git-log][8] output is configurable via the following style,
 where context is *brief*, *oneline*, and *medium*, which will be passed to the
-`--prety=format:` switch.
+`--pretty=format:` switch.
 
     zstyle ':prezto:module:git:log:context' format ''
 
@@ -38,8 +39,8 @@ Aliases
   - `gbc` creates a new branch.
   - `gbl` lists branches and their commits.
   - `gbL` lists local and remote branches and their commits.
-  - `gbs` lists branches and their commits with ancestery graphs.
-  - `gbS` lists local and remote branches and their commits with ancestery
+  - `gbs` lists branches and their commits with ancestry graphs.
+  - `gbS` lists local and remote branches and their commits with ancestry
     graphs.
   - `gbx` deletes a branch.
   - `gbX` deletes a branch irrespective of its merged status.
@@ -53,9 +54,10 @@ Aliases
   - `gca` stages all modified and deleted files.
   - `gcm` records changes to the repository with the given message.
   - `gco` checks out a branch or paths to work tree.
-  - `gcO` checks out paths to work tree using the *HEAD* commit.
+  - `gcO` checks out hunks from the index or the tree interactively.
   - `gcf` amends the tip of the current branch using the same log message as
     *HEAD*.
+  - `gcF` amends the tip of the current branch.
   - `gcp` applies changes introduced by existing commits.
   - `gcP` applies changes introduced by existing commits without committing.
   - `gcr` reverts existing commits by reverting patches and recording new
@@ -63,6 +65,16 @@ Aliases
   - `gcR` removes the *HEAD* commit.
   - `gcs` displays various types of objects.
   - `gcl` displays lost commits.
+
+### Conflict
+
+  - `gCl` lists unmerged files.
+  - `gCa` adds unmerged file contents to the index.
+  - `gCe` executes merge-tool on all unmerged file.
+  - `gCo` checks out our changes for unmerged paths.
+  - `gCO` checks out our changes for all unmerged paths.
+  - `gCt` checks out their changes for unmerged paths.
+  - `gCT` checks out their changes for all unmerged paths.
 
 ### Data
 
@@ -97,20 +109,10 @@ Aliases
   - `giu` adds file contents to the index (updates only known files).
   - `gid` displays changes between the index and a named commit (diff).
   - `giD` displays changes between the index and a named commit (word diff).
-  - `gir` resets current HEAD to the specified state.
-  - `giR` resets current index to the specified state.
+  - `gir` resets the current HEAD to the specified state.
+  - `giR` resets the current index interactively.
   - `gix` removes files/directories from the index (recursively).
   - `giX` removes files/directories from the index (recursively and forced).
-
-### Conflict
-
-  - `gCl` lists unmerged files.
-  - `gCa` adds unmerged file contents to the index.
-  - `gCe` executes merge-tool on all unmerged file.
-  - `gCo` checks out our changes for unmerged paths.
-  - `gCO` checks out our changes for all unmerged paths.
-  - `gCt` checks out their changes for unmerged paths.
-  - `gCT` checks out their changes for all unmerged paths.
 
 ### Log
 
@@ -292,7 +294,7 @@ Second, format how the above attributes are displayed in prompts.
       'prompt'  ' git(%b)' \
       'rprompt' '[%R]'
 
-Last, add `$git_info[prompt]` to `$PROMPT` and `$git_info[prompt]` to
+Last, add `$git_info[prompt]` to `$PROMPT` and `$git_info[rprompt]` to
 `$RPROMPT` respectively and call `git-info` in the `prompt_name_preexec` hook
 function.
 
